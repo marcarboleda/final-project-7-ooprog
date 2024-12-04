@@ -5,6 +5,25 @@
 
 using namespace std;
 
+void SystemClear(){
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+};
+
+void SystemPause() {
+#ifdef _WIN32
+    system("pause");
+#else
+    cout << "Press enter to continue..." << endl;
+    string temp;
+    getline(cin, temp);
+#endif
+};
+
+
 // Flight class to store flight details
 class Flight {
 private:
@@ -134,7 +153,7 @@ public:
 
         while (isRunning) {
             string choice;
-            system("cls");
+            system("clear");
             cout << "\nCustomer Menu:\n";
             cout << "[1] View Personal Information\n";
             cout << "[2] Book a Flight\n";
@@ -144,19 +163,19 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                system("cls");
+                system("clear");
                 cout << "\nPersonal Information\n";
                 cout << "Username: " << username << endl;
                 viewBookings(); // Displays booking history under personal information
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "2") {
-                system("cls");
+                system("clear");
                 bookFlight(db);
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "3") {
-                system("cls");
+                system("clear");
                 if (bookings.empty()) {
                     cout << "No bookings found. Redirecting to booking...\n";
                     bookFlight(db);
@@ -165,17 +184,17 @@ public:
                     viewBookings();
                     cancelFlight(db); // Option to manage bookings (cancel/update)
                 }
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "4") {
-                system("cls");
+                system("clear");
                 cout << "\nLogged out...\n";
-                system("pause");
+                SystemPause();
                 break;
             } else {
-                system("cls");
+                system("clear");
                 cout << "\nInvalid choice. Try again.\n";
-                system("pause");
+                SystemPause();
             }
         }
     }
@@ -203,7 +222,7 @@ public:
 
         while (isRunning) {
             string choice;
-            system("cls");
+            system("clear");
             cout << "\nAdmin Menu:\n";
             cout << "[1] Manage Flights\n";
             cout << "[2] Manage Users\n";
@@ -212,24 +231,24 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                system("cls");
+                system("clear");
                 cout << "check\n";
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "2") {
-                system("cls");
+                system("clear");
                 cout << "check\n";
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "3"){
-                system("cls");
+                system("clear");
                 cout << "\nLogged out...\n";
-                system("pause");
+                SystemPause();
                 break;
             } else {
-                system("cls");
+                system("clear");
                 cout << "\nInvalid choice. Try again.\n";
-                system("pause");
+                SystemPause();
             }
         }
 
@@ -267,7 +286,7 @@ int main() {
         string username, password;
 
         if (roleChoice == "1") {
-            system("cls");
+            system("clear");
             cout << "Admin Login\n";
             cout << "Enter username: ";
             cin >> username;
@@ -278,7 +297,7 @@ int main() {
             admin.login();
             admin.displayMenu(db);
         } else if (roleChoice == "2") {
-            system("cls");
+            system("clear");
             cout << "Customer Login\n";
             cout << "Enter username: ";
             cin >> username;
@@ -289,9 +308,9 @@ int main() {
             customer.login();
             customer.displayMenu(db);
         } else if (roleChoice == "3") {
-            system("cls");
+            system("clear");
             cout << "\nExiting...\n";
-            system("pause");
+            SystemPause();
             break;
         } else {
             cout << "\nInvalid choice. Try again.\n";
