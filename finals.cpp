@@ -23,6 +23,11 @@ void SystemPause() {
 #endif
 };
 
+string normalizeString(const string& input) {
+    string normalized = input;
+    transform(normalized.begin(), normalized.end(), normalized.begin(), ::tolower);
+    return normalized;
+}
 
 // Flight class to store flight details
 class Flight {
@@ -98,7 +103,13 @@ public:
             flight.displayFlightDetails();
         }
     }
+
+    // **Add the getter for flights here**
+    vector<Flight> getFlights() const {
+        return flights;
+    }
 };
+
 
 // User class to represent user details
 class User {
@@ -127,13 +138,37 @@ public:
 
     void bookFlight(AirlineDatabase& db) {
         db.listFlights();
-        string flightChoice;
         cout << "------------------------------------------------------------------------------------------------\n";
+        string flightChoice;
         cout << "Enter flight number to book: ";
         cin >> flightChoice;
-        bookings.push_back(flightChoice);
-        cout << "Flight " << flightChoice << " booked successfully.\n";
+
+        // Normalize the input to uppercase
+        flightChoice = normalizeString(flightChoice);
+        transform(flightChoice.begin(), flightChoice.end(), flightChoice.begin(), ::toupper);
+
+        // Check if the flight exists in the database
+        bool flightFound = false;
+        for (const auto& flight : db.getFlights()) {
+            if (flight.getFlightNumber() == flightChoice) {
+                flightFound = true;
+
+                if (flight.getAvailableSeats() > 0) {
+                    bookings.push_back(flightChoice);
+                    cout << "Flight " << flightChoice << " booked successfully.\n";
+                    break;
+                } else {
+                    cout << "Sorry, no seats available for Flight " << flightChoice << ".\n";
+                    break;
+                }
+            }
+        }
+
+        if (!flightFound) {
+            cout << "Invalid flight number. Please select a valid flight from the list.\n";
+        }
     }
+
 
     void viewBookings() {
         cout << "\nYour Bookings:\n";
@@ -297,7 +332,7 @@ public:
         }
         SystemPause();
     }
-    
+
     void manageFlights(AirlineDatabase& db) {
         bool isManaging = true;
         while (isManaging) {
@@ -462,7 +497,7 @@ int main() {
         string username, password;
 
         if (roleChoice == "1" || roleChoice == "2") {
-            system("cls");
+            SystemClear();
             cout << "\n---------------------------------------------\n";
             cout << (roleChoice == "1" ? "Admin Login" : "Customer Login") << "\n";
             cout << "---------------------------------------------\n";
