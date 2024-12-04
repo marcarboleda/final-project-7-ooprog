@@ -65,6 +65,10 @@ private:
     vector<Flight> flights;
 
 public:
+    vector<Flight> getFlights() const {
+        return flights;
+    }
+
     void addFlight(const Flight& flight) {
         flights.push_back(flight);
     }
@@ -162,6 +166,35 @@ public:
         }
     }
 
+    void generateReports(AirlineDatabase& db) {
+    SystemClear();
+    cout << "\nGenerating Report of Booked Flights...\n";
+
+    if (bookings.empty()) {
+        cout << "No bookings found.\n";
+    } else {
+        for (const auto& booking : bookings) {
+            cout << "Details for Booking: " << booking << endl;
+            bool flightFound = false;
+
+            // Find and display flight details
+            for (const auto& flight : db.getFlights()) {
+                if (flight.getFlightNumber() == booking) {
+                    flight.displayFlightDetails();
+                    flightFound = true;
+                    break;
+                }
+            }
+
+            if (!flightFound) {
+                cout << "Flight " << booking << " not found in the database.\n";
+            }
+        }
+    }
+
+    SystemPause();
+    }
+
     void displayMenu(AirlineDatabase& db) override {
         bool isRunning = true;
 
@@ -172,7 +205,8 @@ public:
             cout << "[1] View Personal Information\n";
             cout << "[2] Book a Flight\n";
             cout << "[3] Already Booked?\n";
-            cout << "[4] Logout\n";
+            cout << "[4] Generate Reports\n";
+            cout << "[5] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
 
@@ -201,6 +235,11 @@ public:
                 SystemPause();
                 continue;
             } else if (choice == "4") {
+                SystemClear();
+                generateReports(db);
+                SystemPause();
+                break;
+            } else if (choice == "5") {
                 SystemClear();
                 cout << "\nLogged out...\n";
                 SystemPause();
@@ -242,61 +281,61 @@ public:
         cout << "\nLogged in as Admin: " << username << endl;
     }
 
-    void addUser() {
-        SystemClear();
-        cout << "\nAdd New User\n";
-        string newUsername, newPassword;
-        cout << "Enter username: ";
-        cin >> newUsername;
-        cout << "Enter password: ";
-        cin >> newPassword;
+    // void addUser() {
+    //     SystemClear();
+    //     cout << "\nAdd New User\n";
+    //     string newUsername, newPassword;
+    //     cout << "Enter username: ";
+    //     cin >> newUsername;
+    //     cout << "Enter password: ";
+    //     cin >> newPassword;
 
-        // Check if the username already exists
-        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
-            return user.getUsername() == newUsername;
-        });
+    //     // Check if the username already exists
+    //     auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
+    //         return user.getUsername() == newUsername;
+    //     });
 
-        if (it != userAccounts.end()) {
-            cout << "\nError: Username already exists.\n";
-        } else {
-            userAccounts.emplace_back(newUsername, newPassword);
-            cout << "\nUser added successfully.\n";
-        }
-        SystemPause();
-    }
+    //     if (it != userAccounts.end()) {
+    //         cout << "\nError: Username already exists.\n";
+    //     } else {
+    //         userAccounts.emplace_back(newUsername, newPassword);
+    //         cout << "\nUser added successfully.\n";
+    //     }
+    //     SystemPause();
+    // }
 
-    void viewUsers() {
-        SystemClear();
-        cout << "\nList of Users:\n";
-        if (userAccounts.empty()) {
-            cout << "No users found.\n";
-        } else {
-            for (const auto& user : userAccounts) {
-                user.displayAccount();
-            }
-        }
-        SystemPause();
-    }
+    // void viewUsers() {
+    //     SystemClear();
+    //     cout << "\nList of Users:\n";
+    //     if (userAccounts.empty()) {
+    //         cout << "No users found.\n";
+    //     } else {
+    //         for (const auto& user : userAccounts) {
+    //             user.displayAccount();
+    //         }
+    //     }
+    //     SystemPause();
+    // }
 
-    void removeUser() {
-        SystemClear();
-        cout << "\nRemove User\n";
-        string usernameToRemove;
-        cout << "Enter username to remove: ";
-        cin >> usernameToRemove;
+    // void removeUser() {
+    //     SystemClear();
+    //     cout << "\nRemove User\n";
+    //     string usernameToRemove;
+    //     cout << "Enter username to remove: ";
+    //     cin >> usernameToRemove;
 
-        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
-            return user.getUsername() == usernameToRemove;
-        });
+    //     auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
+    //         return user.getUsername() == usernameToRemove;
+    //     });
 
-        if (it != userAccounts.end()) {
-            userAccounts.erase(it);
-            cout << "\nUser removed successfully.\n";
-        } else {
-            cout << "\nError: User not found.\n";
-        }
-        SystemPause();
-    }
+    //     if (it != userAccounts.end()) {
+    //         userAccounts.erase(it);
+    //         cout << "\nUser removed successfully.\n";
+    //     } else {
+    //         cout << "\nError: User not found.\n";
+    //     }
+    //     SystemPause();
+    // }
     
     void manageFlights(AirlineDatabase& db) {
         bool isManaging = true;
@@ -369,35 +408,55 @@ public:
         }
     }
 
-    void manageUsers() {
-        bool isManagingUsers = true;
-        while (isManagingUsers) {
-            SystemClear();
-            cout << "\nManage Users Menu:\n";
-            cout << "[1] Add User\n";
-            cout << "[2] View Users\n";
-            cout << "[3] Remove User\n";
-            cout << "[4] Return to Main Menu\n";
-            cout << "Enter your choice: ";
-            string choice;
-            cin >> choice;
+    void generateReports(AirlineDatabase& db) {
+    SystemClear();
+    cout << "\nGenerating Reports...\n";
 
-            if (choice == "1") {
-                addUser();
-            } else if (choice == "2") {
-                viewUsers();
-            } else if (choice == "3") {
-                removeUser();
-            } else if (choice == "4") {
-                cout << "\nReturning to Admin Menu...\n";
-                SystemPause();
-                isManagingUsers = false;
-            } else {
-                cout << "\nInvalid choice. Try again.\n";
-                SystemPause();
-            }
+    cout << "\nFlight Details Report:\n";
+    db.listFlights(); // Use existing method to display flight details
+
+    // Optionally, add a user accounts report if implemented
+    cout << "\nUser Accounts Report:\n";
+    if (userAccounts.empty()) {
+        cout << "No user accounts available.\n";
+    } else {
+        for (const auto& user : userAccounts) {
+            user.displayAccount();
         }
     }
+
+    SystemPause();
+}
+
+    // void manageUsers() {
+    //     bool isManagingUsers = true;
+    //     while (isManagingUsers) {
+    //         SystemClear();
+    //         cout << "\nManage Users Menu:\n";
+    //         cout << "[1] Add User\n";
+    //         cout << "[2] View Users\n";
+    //         cout << "[3] Remove User\n";
+    //         cout << "[4] Return to Main Menu\n";
+    //         cout << "Enter your choice: ";
+    //         string choice;
+    //         cin >> choice;
+
+    //         if (choice == "1") {
+    //             addUser();
+    //         } else if (choice == "2") {
+    //             viewUsers();
+    //         } else if (choice == "3") {
+    //             removeUser();
+    //         } else if (choice == "4") {
+    //             cout << "\nReturning to Admin Menu...\n";
+    //             SystemPause();
+    //             isManagingUsers = false;
+    //         } else {
+    //             cout << "\nInvalid choice. Try again.\n";
+    //             SystemPause();
+    //         }
+    //     }
+    // }
 
     void displayMenu(AirlineDatabase& db) override {
         bool isRunning = true;
@@ -407,7 +466,7 @@ public:
             SystemClear();
             cout << "\nAdmin Menu:\n";
             cout << "[1] Manage Flights\n";
-            cout << "[2] Manage Users\n";
+            cout << "[2] Generate Reports\n";
             cout << "[3] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
@@ -415,7 +474,7 @@ public:
             if (choice == "1") {
                 manageFlights(db);
             } else if (choice == "2") {
-                manageUsers();
+                generateReports(db);
             } else if (choice == "3"){
                 SystemClear();
                 cout << "\nLogged out...\n";
