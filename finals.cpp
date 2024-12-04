@@ -41,14 +41,14 @@ public:
             : flightNumber(flightNum), origin(origin), destination(dest), departureTime(depTime), arrivalTime(arrTime),
               availableSeats(seats), gate(gate), terminal(terminal) {}
 
-    string getFlightNumber() { return flightNumber; }
-    string getOrigin() { return origin; }
-    string getDestination() { return destination; }
-    string getDepartureTime() { return departureTime; }
-    string getArrivalTime() { return arrivalTime; }
-    int getAvailableSeats() { return availableSeats; }
-    string getGate() { return gate; }
-    string getTerminal() { return terminal; }
+    string getFlightNumber() const { return flightNumber; }
+    string getOrigin() const { return origin; }
+    string getDestination() const { return destination; }
+    string getDepartureTime() const { return departureTime; }
+    string getArrivalTime() const { return arrivalTime; }
+    int getAvailableSeats() const { return availableSeats; }
+    string getGate() const { return gate; }
+    string getTerminal() const { return terminal; }
 
     void decreaseSeats() { availableSeats--; }
 
@@ -67,6 +67,18 @@ private:
 public:
     void addFlight(const Flight& flight) {
         flights.push_back(flight);
+    }
+
+    bool removeFlight(const string& flightNumber) {
+        auto it = remove_if(flights.begin(), flights.end(), [&](const Flight& flight) {
+            return flight.getFlightNumber() == flightNumber;
+        });
+
+        if (it != flights.end()) {
+            flights.erase(it, flights.end());
+            return true;
+        }
+        return false;
     }
 
     bool cancelFlightBooking(const string& flightNumber) {
@@ -202,8 +214,27 @@ public:
     }
 };
 
+class UserAccount {
+private:
+    string username;
+    string password;
+
+public:
+    UserAccount(string username, string password) : username(username), password(password) {}
+
+    string getUsername() const { return username; }
+    string getPassword() const { return password; }
+
+    void displayAccount() const {
+        cout << "Username: " << username << endl;
+    }
+};
+
 // Admin class inherits from User
 class Admin : public User {
+private:
+    vector<UserAccount> userAccounts;
+
 public:
     Admin(string username, string password) : User(username, password) {}
 
@@ -211,12 +242,161 @@ public:
         cout << "\nLogged in as Admin: " << username << endl;
     }
 
+    void addUser() {
+        SystemClear();
+        cout << "\nAdd New User\n";
+        string newUsername, newPassword;
+        cout << "Enter username: ";
+        cin >> newUsername;
+        cout << "Enter password: ";
+        cin >> newPassword;
+
+        // Check if the username already exists
+        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
+            return user.getUsername() == newUsername;
+        });
+
+        if (it != userAccounts.end()) {
+            cout << "\nError: Username already exists.\n";
+        } else {
+            userAccounts.emplace_back(newUsername, newPassword);
+            cout << "\nUser added successfully.\n";
+        }
+        SystemPause();
+    }
+
+    void viewUsers() {
+        SystemClear();
+        cout << "\nList of Users:\n";
+        if (userAccounts.empty()) {
+            cout << "No users found.\n";
+        } else {
+            for (const auto& user : userAccounts) {
+                user.displayAccount();
+            }
+        }
+        SystemPause();
+    }
+
+    void removeUser() {
+        SystemClear();
+        cout << "\nRemove User\n";
+        string usernameToRemove;
+        cout << "Enter username to remove: ";
+        cin >> usernameToRemove;
+
+        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
+            return user.getUsername() == usernameToRemove;
+        });
+
+        if (it != userAccounts.end()) {
+            userAccounts.erase(it);
+            cout << "\nUser removed successfully.\n";
+        } else {
+            cout << "\nError: User not found.\n";
+        }
+        SystemPause();
+    }
+    
     void manageFlights(AirlineDatabase& db) {
-        cout << "\nManage Flights Menu: (Functionality not implemented yet)\n";
+        bool isManaging = true;
+        while (isManaging) {
+            string choice;
+            SystemClear();
+            cout << "\nManage Flights Menu:\n";
+            cout << "[1] Add Flight\n";
+            cout << "[2] Remove Flight\n";
+            cout << "[3] View All Flights\n";
+            cout << "[4] Return to Main Menu\n";
+            cout << "Enter your choice: ";
+            cin >> choice;
+
+            if (choice == "1") {
+                SystemClear();
+                cout << "\nAdd a New Flight\n";
+                string flightNum, origin, dest, depTime, arrTime, gate, terminal;
+                int seats;
+
+                cout << "Enter flight number: ";
+                cin >> flightNum;
+                cout << "Enter origin: ";
+                cin >> origin;
+                cout << "Enter destination: ";
+                cin >> dest;
+                cout << "Enter departure time: ";
+                cin >> depTime;
+                cout << "Enter arrival time: ";
+                cin >> arrTime;
+                cout << "Enter number of seats: ";
+                cin >> seats;
+                cout << "Enter gate: ";
+                cin >> gate;
+                cout << "Enter terminal: ";
+                cin >> terminal;
+
+                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, gate, terminal));
+                cout << "\nFlight added successfully.\n";
+                SystemPause();
+            } else if (choice == "2") {
+                SystemClear();
+                cout << "\nRemove a Flight\n";
+                string flightNum;
+
+                cout << "Enter flight number to remove: ";
+                cin >> flightNum;
+
+                if (db.removeFlight(flightNum)) {
+                    cout << "\nFlight removed successfully.\n";
+                } else {
+                    cout << "\nFlight not found.\n";
+                }
+                SystemPause();
+            } else if (choice == "3") {
+                SystemClear();
+                cout << "\nViewing All Flights\n";
+                db.listFlights();
+                SystemPause();
+            } else if (choice == "4") {
+                SystemClear();
+                cout << "\nReturning to Main Menu...\n";
+                SystemPause();
+                isManaging = false;
+            } else {
+                SystemClear();
+                cout << "\nInvalid choice. Try again.\n";
+                SystemPause();
+            }
+        }
     }
 
     void manageUsers() {
-        cout << "\nManage Users Menu: (Functionality not implemented yet)\n";
+        bool isManagingUsers = true;
+        while (isManagingUsers) {
+            SystemClear();
+            cout << "\nManage Users Menu:\n";
+            cout << "[1] Add User\n";
+            cout << "[2] View Users\n";
+            cout << "[3] Remove User\n";
+            cout << "[4] Return to Main Menu\n";
+            cout << "Enter your choice: ";
+            string choice;
+            cin >> choice;
+
+            if (choice == "1") {
+                addUser();
+            } else if (choice == "2") {
+                viewUsers();
+            } else if (choice == "3") {
+                removeUser();
+            } else if (choice == "4") {
+                cout << "\nReturning to Admin Menu...\n";
+                SystemPause();
+                isManagingUsers = false;
+            } else {
+                cout << "\nInvalid choice. Try again.\n";
+                SystemPause();
+            }
+        }
     }
 
     void displayMenu(AirlineDatabase& db) override {
@@ -233,15 +413,9 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                SystemClear();
-                cout << "check\n";
-                SystemPause();
-                continue;
+                manageFlights(db);
             } else if (choice == "2") {
-                SystemClear();
-                cout << "check\n";
-                SystemPause();
-                continue;
+                manageUsers();
             } else if (choice == "3"){
                 SystemClear();
                 cout << "\nLogged out...\n";
