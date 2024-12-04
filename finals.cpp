@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <regex>
 
 using namespace std;
 
@@ -113,11 +114,6 @@ public:
             flight.displayFlightDetails();
         }
     }
-
-    // // **Add the getter for flights here**
-    // vector<Flight> getFlights() {
-    //     return flights;
-    // }
 };
 
 
@@ -398,6 +394,66 @@ public:
         SystemPause();
     }
 
+        // Helper functions for input validation
+    bool isValidFlightNumber(const string& flightNum) {
+        regex pattern("^[A-Z]{2}\\d{3}$"); // Format: Two uppercase letters followed by three digits
+        return regex_match(flightNum, pattern);
+    }
+
+    bool isValidTimeFormat(const string& time) {
+        regex pattern("^(0[1-9]|1[0-2]):[0-5][0-9](AM|PM)$"); // Format: HH:MMAM or HH:MMPM
+        return regex_match(time, pattern);
+    }
+
+    bool isValidString(const string& input) {
+        regex pattern("^[A-Za-z]+$"); // Only alphabets
+        return regex_match(input, pattern);
+    }
+
+    bool isValidIntegerRange(int value, int min, int max) {
+        return value >= min && value <= max;
+    }
+
+    int getValidInt(const string& prompt, int min, int max) {
+        string input;
+        while (true) {
+            cout << prompt;
+            cin >> input;
+
+            // Check if input contains only digits
+            bool isNumber = all_of(input.begin(), input.end(), ::isdigit);
+
+            if (isNumber) {
+                int value = stoi(input); // Convert string to integer
+                if (value >= min && value <= max) {
+                    return value;
+                } else {
+                    cout << "\nInvalid input. Please enter a number between " << min << " and " << max << ".\n";
+                }
+            } else {
+                cout << "\nInvalid input. Please enter numbers only.\n";
+            }
+        }
+    }
+
+    string getValidInput(const string& prompt, const string& type) {
+        string input;
+        while (true) {
+            cout << prompt;
+            cin >> input;
+            if ((type == "flightNum" && isValidFlightNumber(input)) ||
+                (type == "time" && isValidTimeFormat(input)) ||
+                (type == "string" && isValidString(input))) {
+                return input;
+            } else {
+                cout << "Invalid input. ";
+                if (type == "flightNum") cout << "\nFlight number should be 2 letters followed by 3 digits (e.g., PA123).\n";
+                if (type == "time") cout << "\nTime should be in the format HH:MMAM or HH:MMPM (e.g., 02:00PM).\n";
+                if (type == "string") cout << "\nThis field should contain alphabets only.\n";
+            }
+        }
+    }
+
     void manageFlights(AirlineDatabase& db) {
         bool isManaging = true;
         while (isManaging) {
@@ -414,27 +470,16 @@ public:
             if (choice == "1") {
                 SystemClear();
                 cout << "\nAdd a New Flight\n";
-                string flightNum, origin, dest, depTime, arrTime, gate, terminal;
-                int seats;
+                string flightNum = getValidInput("\nEnter flight number: ", "flightNum");
+                string origin = getValidInput("\nEnter origin: ", "string");
+                string dest = getValidInput("\nEnter destination: ", "string");
+                string depTime = getValidInput("\nEnter departure time (HH:MMAM/PM): ", "time");
+                string arrTime = getValidInput("\nEnter arrival time (HH:MMAM/PM): ", "time");
+                int seats = getValidInt("\nEnter number of seats: ", 1, 999);
+                int gate = getValidInt("\nEnter gate (1-30): ", 1, 30);
+                int terminal = getValidInt("\nEnter terminal (1-15): ", 1, 15);
 
-                cout << "Enter flight number: ";
-                cin >> flightNum;
-                cout << "Enter origin: ";
-                cin >> origin;
-                cout << "Enter destination: ";
-                cin >> dest;
-                cout << "Enter departure time: ";
-                cin >> depTime;
-                cout << "Enter arrival time: ";
-                cin >> arrTime;
-                cout << "Enter number of seats: ";
-                cin >> seats;
-                cout << "Enter gate: ";
-                cin >> gate;
-                cout << "Enter terminal: ";
-                cin >> terminal;
-
-                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, gate, terminal));
+                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, to_string(gate), to_string(terminal)));
                 cout << "\nFlight added successfully.\n";
                 SystemPause();
             } else if (choice == "2") {
@@ -444,10 +489,7 @@ public:
                     SystemClear();
                     db.listFlights();
                     cout << "\nRemove a Flight\n";
-                    string flightNum;
-
-                    cout << "Enter flight number to remove: ";
-                    cin >> flightNum;
+                    string flightNum = getValidInput("Enter flight number to remove: ", "flightNum");
 
                     if (db.removeFlight(flightNum)) {
                         cout << "\nFlight removed successfully.\n";
@@ -457,7 +499,6 @@ public:
 
                     bool isValid = false;
                     while (!isValid) {
-                        // Ask if the admin wants to remove another flight
                         string option;
                         cout << "\nDo you want to remove another flight? (Y/N): ";
                         cin >> option;
