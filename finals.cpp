@@ -5,6 +5,25 @@
 
 using namespace std;
 
+void SystemClear(){
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+};
+
+void SystemPause() {
+#ifdef _WIN32
+    system("pause");
+#else
+    cout << "Press enter to continue..." << endl;
+    string temp;
+    getline(cin, temp);
+#endif
+};
+
+
 // Flight class to store flight details
 class Flight {
 private:
@@ -34,9 +53,9 @@ public:
     void decreaseSeats() { availableSeats--; }
 
     void displayFlightDetails() const {
-        cout << "Flight Number: " << flightNumber << "\tOrigin: " << origin << "\tDestination: " << destination
-             << "\nDeparture: " << departureTime << "\tArrival: " << arrivalTime << "\tAvailable Seats: " << availableSeats
-             << "\nGate: " << gate << "\tTerminal: " << terminal << endl;
+        cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
+             << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t" << endl;
     }
 };
 
@@ -63,8 +82,8 @@ public:
     void listFlights() {
         cout << "\nAvailable Flights:\n";
         for (const auto& flight : flights) {
+            cout << "------------------------------------------------------------------------------------------------\n";
             flight.displayFlightDetails();
-            cout << "-----------------------------------\n";
         }
     }
 };
@@ -95,7 +114,9 @@ public:
     }
 
     void bookFlight(AirlineDatabase& db) {
+        db.listFlights();
         string flightChoice;
+        cout << "------------------------------------------------------------------------------------------------\n";
         cout << "Enter flight number to book: ";
         cin >> flightChoice;
         bookings.push_back(flightChoice);
@@ -134,48 +155,48 @@ public:
 
         while (isRunning) {
             string choice;
-            system("cls");
+            SystemClear();
             cout << "\nCustomer Menu:\n";
             cout << "[1] View Personal Information\n";
-            cout << "[2] View Bookings (Update/Cancel)\n";
-            cout << "[3] View Available Flights\n";
-            cout << "[4] Book a Flight\n";
-            cout << "[5] Logout\n";
+            cout << "[2] Book a Flight\n";
+            cout << "[3] Already Booked?\n";
+            cout << "[4] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
 
             if (choice == "1") {
-                system("cls");
+                SystemClear();
                 cout << "\nPersonal Information\n";
                 cout << "Username: " << username << endl;
-                system("pause");
+                viewBookings(); // Displays booking history under personal information
+                SystemPause();
                 continue;
-            } else if (choice == "2" ) {
-                system("cls");
-                viewBookings();
-                cout << "Select a booking to cancel or modify.\n";
-                cancelFlight(db);
-                system("pause");
+            } else if (choice == "2") {
+                SystemClear();
+                bookFlight(db);
+                SystemPause();
                 continue;
-            } else if (choice == "3" ) {
-                system("cls");
-                cout << "Available flights: \n -----\n-----\n";
-                system("pause");
+            } else if (choice == "3") {
+                SystemClear();
+                if (bookings.empty()) {
+                    cout << "No bookings found. Redirecting to booking...\n";
+                    bookFlight(db);
+                } else {
+                    cout << "Managing bookings...\n";
+                    viewBookings();
+                    cancelFlight(db); // Option to manage bookings (cancel/update)
+                }
+                SystemPause();
                 continue;
-            } else if (choice == "4" ) {
-                system("cls");
-                cout << "Select a booking to cancel or modify.\n";
-                system("pause");
-                continue;
-            } else if (choice == "5" ) {
-                system("cls");
+            } else if (choice == "4") {
+                SystemClear();
                 cout << "\nLogged out...\n";
-                system("pause");
+                SystemPause();
                 break;
             } else {
-                system("cls");
+                SystemClear();
                 cout << "\nInvalid choice. Try again.\n";
-                system("pause");
+                SystemPause();
             }
         }
     }
@@ -203,7 +224,7 @@ public:
 
         while (isRunning) {
             string choice;
-            system("cls");
+            SystemClear();
             cout << "\nAdmin Menu:\n";
             cout << "[1] Manage Flights\n";
             cout << "[2] Manage Users\n";
@@ -212,24 +233,24 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                system("cls");
+                SystemClear();
                 cout << "check\n";
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "2") {
-                system("cls");
+                SystemClear();
                 cout << "check\n";
-                system("pause");
+                SystemPause();
                 continue;
             } else if (choice == "3"){
-                system("cls");
+                SystemClear();
                 cout << "\nLogged out...\n";
-                system("pause");
+                SystemPause();
                 break;
             } else {
-                system("cls");
+                SystemClear();
                 cout << "\nInvalid choice. Try again.\n";
-                system("pause");
+                SystemPause();
             }
         }
 
@@ -239,8 +260,8 @@ public:
 int main() {
     AirlineDatabase db;
     db.addFlight(Flight("PA123", "Manila", "Cebu", "10:00 AM", "12:00 PM", 50, "A1", "T1"));
-    db.addFlight(Flight("PA456", "Manila", "Davao", "2:00 PM", "4:00 PM", 40, "B1", "T2"));
-    db.addFlight(Flight("PA789", "Manila", "Iloilo", "6:00 PM", "8:00 PM", 30, "C1", "T3"));
+    db.addFlight(Flight("PA456", "Manila", "Davao", "02:00 PM", "04:00 PM", 40, "B1", "T2"));
+    db.addFlight(Flight("PA789", "Manila", "Iloilo", "06:00 PM", "08:00 PM", 30, "C1", "T3"));
 
     bool running = true;
 
@@ -265,6 +286,7 @@ int main() {
         cin >> roleChoice;
 
         string username, password;
+
         if (roleChoice == "1" || roleChoice == "2") {
             system("cls");
             cout << "\n---------------------------------------------\n";
@@ -285,11 +307,14 @@ int main() {
                 customer.displayMenu(db);
             }
         } else if (roleChoice == "3") {
-            cout << "\nEXITING.....\n";
-            running = false;
+            SystemClear();
+            cout << "\nExiting...\n";
+            SystemPause();
+            break;
         } else {
             cout << "\nInvalid choice. Try again.\n";
         }
     }
+
     return 0;
 }
