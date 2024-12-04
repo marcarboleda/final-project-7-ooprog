@@ -88,7 +88,7 @@ private:
     vector<string> bookings;  // Store the booked flights
 
 public:
-    Customer(string username, string password) : User(username, password) {}
+    Customer(string username, string password) : User(username, password) { }
 
     void login() override {
         cout << "\nLogged in as Customer: " << username << endl;
@@ -130,41 +130,41 @@ public:
     }
 
     void displayMenu(AirlineDatabase& db) override {
-        int choice;
-        do {
+        bool isRunning = true;
+
+        while (isRunning) {
+            string choice;
             cout << "\nCustomer Menu:\n";
-            cout << "1. View Personal Information\n";
-            cout << "2. View Bookings (Update/Cancel)\n";
-            cout << "3. View Available Flights\n";
-            cout << "4. Book a Flight\n";
-            cout << "5. Logout\n";
+            cout << "[1] View Personal Information\n";
+            cout << "[2] View Bookings (Update/Cancel)\n";
+            cout << "[3] View Available Flights\n";
+            cout << "[4] Book a Flight\n";
+            cout << "[5] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
 
-            switch (choice) {
-                case 1:
-                    cout << "\nPersonal Information\n";
-                    cout << "Username: " << username << endl;
-                    break;
-                case 2:
-                    viewBookings();
-                    cout << "Select a booking to cancel or modify.\n";
-                    cancelFlight(db);
-                    break;
-                case 3:
-                    db.listFlights();
-                    break;
-                case 4:
-                    bookFlight(db);
-                    break;
-                case 5:
-                    cout << "Logged out.\n";
-                    break;
-                default:
-                    cout << "Invalid choice. Try again.\n";
-                    break;
+            if (choice == "1") {
+                cout << "\nPersonal Information\n";
+                cout << "Username: " << username << endl;
+                continue;
+            } else if (choice == "2" ) {
+                viewBookings();
+                cout << "Select a booking to cancel or modify.\n";
+                cancelFlight(db);
+                continue;
+            } else if (choice == "3" ) {
+                cout << "Available flights: \n -----\n-----\n";
+                continue;
+            } else if (choice == "4" ) {
+                cout << "Select a booking to cancel or modify.\n";
+                continue;
+            } else if (choice == "5" ) {
+                cout << "\nLogged out...\n";
+                break;
+            } else {
+                cout << "\nInvalid choice. Try again.\n";
             }
-        } while (choice != 5);
+        }
     }
 };
 
@@ -178,78 +178,39 @@ public:
     }
 
     void manageFlights(AirlineDatabase& db) {
-        int choice;
-        cout << "\nManage Flights Menu:\n";
-        cout << "1. Create Flight\n";
-        cout << "2. Update Flight\n";
-        cout << "3. Delete Flight\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                // Implement create flight logic
-                break;
-            case 2:
-                // Implement update flight logic
-                break;
-            case 3:
-                // Implement delete flight logic
-                break;
-            default:
-                cout << "Invalid choice.\n";
-                break;
-        }
+        cout << "\nManage Flights Menu: (Functionality not implemented yet)\n";
     }
 
     void manageUsers() {
-        int choice;
-        cout << "\nManage Users Menu:\n";
-        cout << "1. Create User\n";
-        cout << "2. Update User\n";
-        cout << "3. Delete User\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                // Implement create user logic
-                break;
-            case 2:
-                // Implement update user logic
-                break;
-            case 3:
-                // Implement delete user logic
-                break;
-            default:
-                cout << "Invalid choice.\n";
-                break;
-        }
+        cout << "\nManage Users Menu: (Functionality not implemented yet)\n";
     }
 
     void displayMenu(AirlineDatabase& db) override {
-        int choice;
-        do {
+        bool isRunning = true;
+
+        while (isRunning) {
+            string choice;
             cout << "\nAdmin Menu:\n";
-            cout << "1. Manage Flights\n";
-            cout << "2. Manage Users\n";
-            cout << "3. Logout\n";
+            cout << "[1] Manage Flights\n";
+            cout << "[2] Manage Users\n";
+            cout << "[3] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
 
-            switch (choice) {
-                case 1:
-                    manageFlights(db);
-                    break;
-                case 2:
-                    manageUsers();
-                    break;
-                case 3:
-                    cout << "Logged out.\n";
-                    break;
-                default:
-                    cout << "Invalid choice. Try again.\n";
-                    break;
+            if (choice == "1") {
+                cout << "check\n";
+                continue;
+            } else if (choice == "2") {
+                cout << "check\n";
+                continue;
+            } else if (choice == "3"){
+                cout << "\nLogged out...\n";
+                break;
+            } else {
+                cout << "\nInvalid choice. Try again.\n";
             }
-        } while (choice != 3);
+        }
+
     }
 };
 
@@ -259,32 +220,40 @@ int main() {
     db.addFlight(Flight("PA456", "Manila", "Davao", "2:00 PM", "4:00 PM", 40, "B1", "T2"));
     db.addFlight(Flight("PA789", "Manila", "Iloilo", "6:00 PM", "8:00 PM", 30, "C1", "T3"));
 
-    int roleChoice;
-    cout << "Welcome to the Airline Management System!\n";
-    cout << "Are you signing up as:\n";
-    cout << "1. Admin\n";
-    cout << "2. Customer\n";
-    cout << "Enter your choice: ";
-    cin >> roleChoice;
+    bool running = true;
 
-    string username, password;
-    if (roleChoice == 1 || roleChoice == 2) {
-        cout << "Enter username: ";
-        cin >> username;
-        cout << "Enter password: ";
-        cin >> password;
+    while (running) {
+        string roleChoice;
+        cout << "\nWelcome to the Airline Management System!\n";
+        cout << "Are you signing up as:\n";
+        cout << "1. Admin\n";
+        cout << "2. Customer\n";
+        cout << "3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> roleChoice;
 
-        if (roleChoice == 1) {
-            Admin admin(username, password);
-            admin.login();
-            admin.displayMenu(db);  // Pass db to Admin's displayMenu
-        } else if (roleChoice == 2) {
-            Customer customer(username, password);
-            customer.login();
-            customer.displayMenu(db);  // Pass db to Customer's displayMenu
+        string username, password;
+        if (roleChoice == "1" || roleChoice == "2") {
+            cout << "Enter username: ";
+            cin >> username;
+            cout << "Enter password: ";
+            cin >> password;
+
+            if (roleChoice == "1") {
+                Admin admin(username, password);
+                admin.login();
+                admin.displayMenu(db);
+            } else if (roleChoice == "2") {
+                Customer customer(username, password);
+                customer.login();
+                customer.displayMenu(db);
+            }
+        } else if (roleChoice == "3") {
+            cout << "\nEXITING.....\n";
+            running = false;
+        } else {
+            cout << "\nInvalid choice. Try again.\n";
         }
-    } else {
-        cout << "Invalid choice. Please restart the program.\n";
     }
 
     return 0;
