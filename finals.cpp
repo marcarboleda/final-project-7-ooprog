@@ -41,11 +41,12 @@ private:
     int availableSeats;
     string gate;
     string terminal;
+    double price;
 
 public:
-    Flight(string flightNum, string origin, string dest, string depTime, string arrTime, int seats, string gate, string terminal)
+    Flight(string flightNum, string origin, string dest, string depTime, string arrTime, int seats, string gate, string terminal, double price)
             : flightNumber(flightNum), origin(origin), destination(dest), departureTime(depTime), arrivalTime(arrTime),
-              availableSeats(seats), gate(gate), terminal(terminal) {}
+              availableSeats(seats), gate(gate), terminal(terminal), price(price) {}
 
     string getFlightNumber() const { return flightNumber; }
     string getOrigin() const { return origin; }
@@ -55,6 +56,7 @@ public:
     int getAvailableSeats() const { return availableSeats; }
     string getGate() const { return gate; }
     string getTerminal() const { return terminal; }
+    double getPrice() const { return price; }
 
     void decreaseSeats() { 
         if (availableSeats > 0) {
@@ -69,7 +71,7 @@ public:
     void displayFlightDetails() const {
         cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
              << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
-             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t" << endl;
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: $" << price << endl; // Display price
     }
 };
 
@@ -439,7 +441,8 @@ public:
                 int gate = getValidInt("\nEnter gate (1-30): ", 1, 30);
                 int terminal = getValidInt("\nEnter terminal (1-15): ", 1, 15);
 
-                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, to_string(gate), to_string(terminal)));
+                double price = getValidInt("\nEnter price: ", 1, 100000); // Add price input
+                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, to_string(gate), to_string(terminal), price));
                 SystemClear();
                 cout << "\nFlight added successfully.\n";
                 cout << "------------------------------------------------------------------------------------------------\n";
@@ -545,9 +548,9 @@ public:
 
 int main() {
     AirlineDatabase db;
-    db.addFlight(Flight("PA123", "Manila", "Cebu", "10:00 AM", "12:00 PM", 50, "A1", "T1"));
-    db.addFlight(Flight("PA456", "Manila", "Davao", "02:00 PM", "04:00 PM", 40, "B1", "T2"));
-    db.addFlight(Flight("PA789", "Manila", "Iloilo", "06:00 PM", "08:00 PM", 30, "C1", "T3"));
+    db.addFlight(Flight("PA123", "Manila", "Cebu", "10:00 AM", "12:00 PM", 50, "A1", "T1", 5000.00));
+    db.addFlight(Flight("PA456", "Manila", "Davao", "02:00 PM", "04:00 PM", 40, "B1", "T2", 7500.00));
+    db.addFlight(Flight("PA789", "Manila", "Iloilo", "06:00 PM", "08:00 PM", 30, "C1", "T3", 6000.00));
 
     bool running = true;
 
