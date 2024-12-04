@@ -354,63 +354,6 @@ public:
         cout << "\nLogged in as Admin: " << username << endl;
     }
 
-
-    void addUser() {
-        SystemClear();
-        cout << "\nAdd New User\n";
-        string newUsername, newPassword;
-        cout << "Enter username: ";
-        cin >> newUsername;
-        cout << "Enter password: ";
-        cin >> newPassword;
-
-        // Check if the username already exists
-        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
-            return user.getUsername() == newUsername;
-        });
-
-        if (it != userAccounts.end()) {
-            cout << "\nError: Username already exists.\n";
-        } else {
-            userAccounts.emplace_back(newUsername, newPassword);
-            cout << "\nUser added successfully.\n";
-        }
-        SystemPause();
-    }
-
-    void viewUsers() {
-        SystemClear();
-        cout << "\nList of Users:\n";
-        if (userAccounts.empty()) {
-            cout << "No users found.\n";
-        } else {
-            for (const auto& user : userAccounts) {
-                user.displayAccount();
-            }
-        }
-        SystemPause();
-    }
-
-    void removeUser() {
-        SystemClear();
-        cout << "\nRemove User\n";
-        string usernameToRemove;
-        cout << "Enter username to remove: ";
-        cin >> usernameToRemove;
-
-        auto it = find_if(userAccounts.begin(), userAccounts.end(), [&](const UserAccount& user) {
-            return user.getUsername() == usernameToRemove;
-        });
-
-        if (it != userAccounts.end()) {
-            userAccounts.erase(it);
-            cout << "\nUser removed successfully.\n";
-        } else {
-            cout << "\nError: User not found.\n";
-        }
-        SystemPause();
-    }
-
         // Helper functions for input validation
     bool isValidFlightNumber(const string& flightNum) {
         regex pattern("^[A-Z]{2}\\d{3}$"); // Format: Two uppercase letters followed by three digits
@@ -497,7 +440,13 @@ public:
                 int terminal = getValidInt("\nEnter terminal (1-15): ", 1, 15);
 
                 db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, to_string(gate), to_string(terminal)));
+                SystemClear();
                 cout << "\nFlight added successfully.\n";
+                cout << "------------------------------------------------------------------------------------------------\n";
+                cout << "Flight Number: " << "\t" << flightNum << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << dest
+                << "\nDeparture: " << "\t" << depTime << "\t\tArrival: " << "\t" << arrTime << "\t\tAvailable Seats: " << "\t" << seats
+                << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t" << endl;
+                cout << "------------------------------------------------------------------------------------------------\n";
                 SystemPause();
             } else if (choice == "2") {
                 bool removing = true;
@@ -559,15 +508,6 @@ public:
     cout << "\nFlight Details Report:\n";
     db.listFlights(); // Use existing method to display flight details
 
-    cout << "\nUser Accounts Report:\n";
-    if (userAccounts.empty()) {
-        cout << "No user accounts available.\n";
-    } else {
-        for (const auto& user : userAccounts) {
-            user.displayAccount();
-        }
-    }
-
     SystemPause();
 }
 
@@ -612,6 +552,7 @@ int main() {
     bool running = true;
 
     while (running) {
+        SystemClear();
         string roleChoice;
         cout << "\n"
                 "  _      _                 _ _____  _    _ \n"
@@ -632,20 +573,31 @@ int main() {
         cin >> roleChoice;
 
         if (roleChoice == "1") {
-            // Admin login process
-            string username, password;
             SystemClear();
-            cout << "\n---------------------------------------------\n";
-            cout << "Admin Login\n";
-            cout << "---------------------------------------------\n";
-            cout << "Enter username: ";
-            cin >> username;
-            cout << "Enter password: ";
-            cin >> password;
+            bool isValidPass = true;
+            while (isValidPass) {
+                // Admin login process
+                string username, password;
+                SystemClear();
+                cout << "\n---------------------------------------------\n";
+                cout << "Admin Login\n";
+                cout << "---------------------------------------------\n";
+                cout << "Enter username: ";
+                cin >> username;
+                cout << "Enter password: ";
+                cin >> password;
 
-            Admin admin(username, password);
-            admin.login();
-            admin.displayMenu(db);
+                if (username == "Admin" && password == "admin123") {
+                    Admin admin(username, password);
+                    admin.login();
+                    admin.displayMenu(db);
+                    isValidPass = false;
+                } else {
+                    SystemClear();
+                    cout << "\nInvalid Username & Password. Try Again\n";
+                    SystemPause();
+                }
+            }
         } else if (roleChoice == "2") {
             // Directly access customer menu without login
             SystemClear();
