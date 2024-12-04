@@ -71,7 +71,7 @@ public:
     void displayFlightDetails() const {
         cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
              << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
-             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: $" << price << endl; // Display price
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: $" << price << endl; 
     }
 };
 
@@ -448,7 +448,7 @@ public:
                 cout << "------------------------------------------------------------------------------------------------\n";
                 cout << "Flight Number: " << "\t" << flightNum << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << dest
                 << "\nDeparture: " << "\t" << depTime << "\t\tArrival: " << "\t" << arrTime << "\t\tAvailable Seats: " << "\t" << seats
-                << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t" << endl;
+                << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t\tPrice:" << "\t\t" << "P" <<price << endl;
                 cout << "------------------------------------------------------------------------------------------------\n";
                 SystemPause();
             } else if (choice == "2") {
