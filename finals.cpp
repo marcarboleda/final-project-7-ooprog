@@ -58,8 +58,12 @@ public:
 
     void decreaseSeats() { 
         if (availableSeats > 0) {
-        --availableSeats;
+            --availableSeats;
+        }
     }
+
+    void increaseSeats() {
+        ++availableSeats;
     }
 
     void displayFlightDetails() const {
@@ -113,6 +117,16 @@ public:
             cout << "------------------------------------------------------------------------------------------------\n";
             flight.displayFlightDetails();
         }
+    }
+
+    bool increaseSeats(const string& flightNumber) {
+    for (auto& flight : flights) {
+        if (flight.getFlightNumber() == flightNumber) {
+            flight.increaseSeats();
+            return true;
+        }
+    }
+    return false;
     }
 };
 
@@ -196,8 +210,11 @@ public:
         auto it = find(bookings.begin(), bookings.end(), flightChoice);
         if (it != bookings.end()) {
             bookings.erase(it);  // Erase flight from bookings
-            db.cancelFlightBooking(flightChoice);  // Decrease available seats in database
-            cout << "Booking canceled successfully.\n";
+            if (db.increaseSeats(flightChoice)) {  // Increase available seats in the database
+                cout << "Booking canceled successfully\n";
+            } else {
+                cout << "Error: Could not update seat count.\n";
+            }
         } else {
             cout << "Booking not found in your list.\n";
         }
