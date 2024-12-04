@@ -137,10 +137,9 @@ public:
             system("cls");
             cout << "\nCustomer Menu:\n";
             cout << "[1] View Personal Information\n";
-            cout << "[2] View Bookings (Update/Cancel)\n";
-            cout << "[3] View Available Flights\n";
-            cout << "[4] Book a Flight\n";
-            cout << "[5] Logout\n";
+            cout << "[2] Book a Flight\n";
+            cout << "[3] Already Booked?\n";
+            cout << "[4] Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
 
@@ -148,26 +147,27 @@ public:
                 system("cls");
                 cout << "\nPersonal Information\n";
                 cout << "Username: " << username << endl;
+                viewBookings(); // Displays booking history under personal information
                 system("pause");
                 continue;
-            } else if (choice == "2" ) {
+            } else if (choice == "2") {
                 system("cls");
-                viewBookings();
-                cout << "Select a booking to cancel or modify.\n";
-                cancelFlight(db);
+                bookFlight(db);
                 system("pause");
                 continue;
-            } else if (choice == "3" ) {
+            } else if (choice == "3") {
                 system("cls");
-                cout << "Available flights: \n -----\n-----\n";
+                if (bookings.empty()) {
+                    cout << "No bookings found. Redirecting to booking...\n";
+                    bookFlight(db);
+                } else {
+                    cout << "Managing bookings...\n";
+                    viewBookings();
+                    cancelFlight(db); // Option to manage bookings (cancel/update)
+                }
                 system("pause");
                 continue;
-            } else if (choice == "4" ) {
-                system("cls");
-                cout << "Select a booking to cancel or modify.\n";
-                system("pause");
-                continue;
-            } else if (choice == "5" ) {
+            } else if (choice == "4") {
                 system("cls");
                 cout << "\nLogged out...\n";
                 system("pause");
@@ -265,31 +265,38 @@ int main() {
         cin >> roleChoice;
 
         string username, password;
-        if (roleChoice == "1" || roleChoice == "2") {
+
+        if (roleChoice == "1") {
             system("cls");
-            cout << "\n---------------------------------------------\n";
-            cout << (roleChoice == "1" ? "Admin Login" : "Customer Login") << "\n";
-            cout << "---------------------------------------------\n";
+            cout << "Admin Login\n";
             cout << "Enter username: ";
             cin >> username;
             cout << "Enter password: ";
             cin >> password;
 
-            if (roleChoice == "1") {
-                Admin admin(username, password);
-                admin.login();
-                admin.displayMenu(db);
-            } else if (roleChoice == "2") {
-                Customer customer(username, password);
-                customer.login();
-                customer.displayMenu(db);
-            }
+            Admin admin(username, password);
+            admin.login();
+            admin.displayMenu(db);
+        } else if (roleChoice == "2") {
+            system("cls");
+            cout << "Customer Login\n";
+            cout << "Enter username: ";
+            cin >> username;
+            cout << "Enter password: ";
+            cin >> password;
+
+            Customer customer(username, password);
+            customer.login();
+            customer.displayMenu(db);
         } else if (roleChoice == "3") {
-            cout << "\nEXITING.....\n";
-            running = false;
+            system("cls");
+            cout << "\nExiting...\n";
+            system("pause");
+            break;
         } else {
             cout << "\nInvalid choice. Try again.\n";
         }
     }
+
     return 0;
 }
