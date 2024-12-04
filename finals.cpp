@@ -153,7 +153,7 @@ public:
 
         while (isRunning) {
             string choice;
-            system("clear");
+            SystemClear();
             cout << "\nCustomer Menu:\n";
             cout << "[1] View Personal Information\n";
             cout << "[2] Book a Flight\n";
@@ -163,19 +163,19 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                system("clear");
+                SystemClear();
                 cout << "\nPersonal Information\n";
                 cout << "Username: " << username << endl;
                 viewBookings(); // Displays booking history under personal information
                 SystemPause();
                 continue;
             } else if (choice == "2") {
-                system("clear");
+                SystemClear();
                 bookFlight(db);
                 SystemPause();
                 continue;
             } else if (choice == "3") {
-                system("clear");
+                SystemClear();
                 if (bookings.empty()) {
                     cout << "No bookings found. Redirecting to booking...\n";
                     bookFlight(db);
@@ -187,12 +187,12 @@ public:
                 SystemPause();
                 continue;
             } else if (choice == "4") {
-                system("clear");
+                SystemClear();
                 cout << "\nLogged out...\n";
                 SystemPause();
                 break;
             } else {
-                system("clear");
+                SystemClear();
                 cout << "\nInvalid choice. Try again.\n";
                 SystemPause();
             }
@@ -222,7 +222,7 @@ public:
 
         while (isRunning) {
             string choice;
-            system("clear");
+            SystemClear();
             cout << "\nAdmin Menu:\n";
             cout << "[1] Manage Flights\n";
             cout << "[2] Manage Users\n";
@@ -231,22 +231,22 @@ public:
             cin >> choice;
 
             if (choice == "1") {
-                system("clear");
+                SystemClear();
                 cout << "check\n";
                 SystemPause();
                 continue;
             } else if (choice == "2") {
-                system("clear");
+                SystemClear();
                 cout << "check\n";
                 SystemPause();
                 continue;
             } else if (choice == "3"){
-                system("clear");
+                SystemClear();
                 cout << "\nLogged out...\n";
                 SystemPause();
                 break;
             } else {
-                system("clear");
+                SystemClear();
                 cout << "\nInvalid choice. Try again.\n";
                 SystemPause();
             }
@@ -286,7 +286,7 @@ int main() {
         string username, password;
 
         if (roleChoice == "1") {
-            system("clear");
+            SystemClear();
             cout << "Admin Login\n";
             cout << "Enter username: ";
             cin >> username;
@@ -297,7 +297,7 @@ int main() {
             admin.login();
             admin.displayMenu(db);
         } else if (roleChoice == "2") {
-            system("clear");
+            SystemClear();
             cout << "Customer Login\n";
             cout << "Enter username: ";
             cin >> username;
@@ -308,7 +308,7 @@ int main() {
             customer.login();
             customer.displayMenu(db);
         } else if (roleChoice == "3") {
-            system("clear");
+            SystemClear();
             cout << "\nExiting...\n";
             SystemPause();
             break;
