@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug"/>
+				<Option working_dir="/Users/renzocabral/Documents/untitled folder/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="final_project_7_ooprog">
-				<Option output="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/final_project_7_ooprog" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug"/>
+				<Option output="/Users/renzocabral/Documents/untitled folder/cmake-build-debug/final_project_7_ooprog" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/renzocabral/Documents/untitled folder/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -30,15 +30,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 final_project_7_ooprog"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 final_project_7_ooprog"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="final_project_7_ooprog/fast">
-				<Option output="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/final_project_7_ooprog" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug"/>
+				<Option output="/Users/renzocabral/Documents/untitled folder/cmake-build-debug/final_project_7_ooprog" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/renzocabral/Documents/untitled folder/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -49,37 +49,37 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 final_project_7_ooprog/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 final_project_7_ooprog/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug"/>
+				<Option working_dir="/Users/renzocabral/Documents/untitled folder/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug"/>
+				<Option working_dir="/Users/renzocabral/Documents/untitled folder/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/final-project-7-ooprog./cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/renzocabral/Documents/untitled\ folder/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/renzocabral/Documents/final-project-7-ooprog./finals.cpp">
+		<Unit filename="/Users/renzocabral/Documents/untitled folder/finals.cpp">
 			<Option target="final_project_7_ooprog"/>
 		</Unit>
-		<Unit filename="/Users/renzocabral/Documents/final-project-7-ooprog./CMakeLists.txt">
+		<Unit filename="/Users/renzocabral/Documents/untitled folder/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
