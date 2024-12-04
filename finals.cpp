@@ -30,6 +30,21 @@ string normalizeString(const string& input) {
     return normalized;
 }
 
+string getInputWithExitOption(const string& promptMessage) {
+    string userInput;
+    cout << promptMessage;
+    cin >> userInput;
+
+    // Normalize input to uppercase for uniformity
+    userInput = normalizeString(userInput);
+    transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
+
+    if (userInput == "EXIT") {
+        cout << "Exiting the process.\n";
+    }
+    return userInput;
+}
+
 // Flight class to store flight details
 class Flight {
 private:
@@ -70,8 +85,8 @@ public:
 
     void displayFlightDetails() const {
         cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
-             << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
-             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: P" << price << endl;
+             << "\nDeparture: " << "\t" << departureTime << "\t\tArrival: " << "\t" << arrivalTime << "\t\tAvailable Seats: " << "\t" << availableSeats
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t\tPrice:" << "\t\t" << price << endl; 
     }
 };
 
@@ -159,35 +174,36 @@ public:
     }
 
     void bookFlight(AirlineDatabase& db) {
-        db.listFlights();
-        cout << "------------------------------------------------------------------------------------------------\n";
-        string flightChoice;
-        cout << "Enter flight number to book: ";
-        cin >> flightChoice;
+        while (true) {
+            db.listFlights();
+            cout << "------------------------------------------------------------------------------------------------\n";
 
-        // Normalize the input to uppercase
-        flightChoice = normalizeString(flightChoice);
-        transform(flightChoice.begin(), flightChoice.end(), flightChoice.begin(), ::toupper);
+            string flightChoice = getInputWithExitOption("Enter flight number to book (or type 'EXIT' to cancel): ");
 
-        // Check if the flight exists in the database
-        bool flightFound = false;
-        for (Flight& flight : db.getFlights()) { // Use reference here
-            if (flight.getFlightNumber() == flightChoice) {
-                flightFound = true;
+            if (flightChoice == "EXIT") return; // Exit booking process
 
-                if (flight.getAvailableSeats() > 0) {
-                    flight.decreaseSeats(); // Reduce the available seats
-                    bookings.push_back(flightChoice);
-                    cout << "Flight " << flightChoice << " booked successfully.\n";
-                } else {
-                    cout << "Sorry, no seats available for Flight " << flightChoice << ".\n";
+            // Check if the flight exists in the database
+            bool flightFound = false;
+            for (Flight& flight : db.getFlights()) {
+                if (flight.getFlightNumber() == flightChoice) {
+                    flightFound = true;
+
+                    if (flight.getAvailableSeats() > 0) {
+                        flight.decreaseSeats(); // Reduce the available seats
+                        bookings.push_back(flightChoice);
+                        cout << "Flight " << flightChoice << " booked successfully.\n";
+                    } else {
+                        cout << "Sorry, no seats available for Flight " << flightChoice << ".\n";
+                    }
+                    break; // Exit the loop once the flight is found
                 }
-                break; // Exit the loop once the flight is found
             }
-        }
 
-        if (!flightFound) {
-            cout << "Invalid flight number. Please select a valid flight from the list.\n";
+            if (!flightFound) {
+                cout << "Invalid flight number. Please select a valid flight from the list.\n";
+                SystemPause();
+                SystemClear();
+            }
         }
     }
 
@@ -204,31 +220,35 @@ public:
     }
 
     void cancelFlight(AirlineDatabase& db) {
-        string flightChoice;
-        cout << "Enter flight number to cancel: ";
-        cin >> flightChoice;
+        while (true) {
+            string flightChoice = getInputWithExitOption("Enter flight number to cancel (or type 'EXIT' to cancel): ");
 
-        // Remove from bookings
-        auto it = find(bookings.begin(), bookings.end(), flightChoice);
-        if (it != bookings.end()) {
-            bookings.erase(it);  // Erase flight from bookings
-            if (db.increaseSeats(flightChoice)) {  // Increase available seats in the database
-                cout << "Booking canceled successfully\n";
+            if (flightChoice == "EXIT") return; // Exit cancellation process
+
+            // Remove from bookings
+            auto it = find(bookings.begin(), bookings.end(), flightChoice);
+            if (it != bookings.end()) {
+                bookings.erase(it); // Erase flight from bookings
+                if (db.increaseSeats(flightChoice)) { // Increase available seats in the database
+                    cout << "Booking canceled successfully\n";
+                } else {
+                    cout << "Error: Could not update seat count.\n";
+                }
             } else {
-                cout << "Error: Could not update seat count.\n";
+                cout << "Booking not found in your list.\n";
             }
-        } else {
-            cout << "Booking not found in your list.\n";
         }
     }
 
     void generateReports(AirlineDatabase& db) {
-    SystemClear();
-    cout << "\nGenerating Report of Booked Flights...\n";
+        SystemClear();
+        cout << "\nGenerating Report of Booked Flights...\n";
 
-    if (bookings.empty()) {
-        cout << "No bookings found.\n";
-    } else {
+        if (bookings.empty()) {
+            cout << "No bookings found.\n";
+            return;
+        }
+
         for (const auto& booking : bookings) {
             cout << "Details for Booking: " << booking << endl;
             bool flightFound = false;
@@ -246,7 +266,6 @@ public:
                 cout << "Flight " << booking << " not found in the database.\n";
             }
         }
-    }
     }
 
     void displayMenu(AirlineDatabase& db) override {
@@ -432,22 +451,22 @@ public:
             if (choice == "1") {
                 SystemClear();
                 cout << "\nAdd a New Flight\n";
-                string flightNum = getValidInput("\nEnter flight number: ", "flightNum");
+                string flightNumber = getValidInput("\nEnter flight number: ", "flightNum");
                 string origin = getValidInput("\nEnter origin: ", "string");
-                string dest = getValidInput("\nEnter destination: ", "string");
-                string depTime = getValidInput("\nEnter departure time (HH:MMAM/PM): ", "time");
-                string arrTime = getValidInput("\nEnter arrival time (HH:MMAM/PM): ", "time");
-                int seats = getValidInt("\nEnter number of seats: ", 1, 999);
+                string destination = getValidInput("\nEnter destination: ", "string");
+                string departureTime = getValidInput("\nEnter departure time (HH:MMAM/PM): ", "time");
+                string arrivalTime = getValidInput("\nEnter arrival time (HH:MMAM/PM): ", "time");
+                int availableSeats = getValidInt("\nEnter number of seats: ", 1, 999);
                 int gate = getValidInt("\nEnter gate (1-30): ", 1, 30);
                 int terminal = getValidInt("\nEnter terminal (1-15): ", 1, 15);
+                double price = getValidInt("\nEnter price: ", 1, 100000); 
 
-                double price = getValidInt("\nEnter price: ", 1, 100000); // Add price input
-                db.addFlight(Flight(flightNum, origin, dest, depTime, arrTime, seats, to_string(gate), to_string(terminal), price));
+                db.addFlight(Flight(flightNumber, origin, destination, departureTime, arrivalTime, availableSeats, to_string(gate), to_string(terminal), price));
                 SystemClear();
                 cout << "\nFlight added successfully.\n";
                 cout << "------------------------------------------------------------------------------------------------\n";
-                cout << "Flight Number: " << "\t" << flightNum << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << dest
-                << "\nDeparture: " << "\t" << depTime << "\t\tArrival: " << "\t" << arrTime << "\t\tAvailable Seats: " << "\t" << seats
+                cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
+                << "\nDeparture: " << "\t" << departureTime << "\t\tArrival: " << "\t" << arrivalTime << "\t\tAvailable Seats: " << "\t" << availableSeats
                 << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t\tPrice:" << "\t\t" << "P" <<price << endl;
                 cout << "------------------------------------------------------------------------------------------------\n";
                 SystemPause();
@@ -597,8 +616,9 @@ int main() {
                     isValidPass = false;
                 } else {
                     SystemClear();
-                    cout << "\nInvalid Username & Password. Try Again\n";
+                    cout << "\nInvalid Username & Password. Redirecting to Main Menu...\n\n";
                     SystemPause();
+                    break;
                 }
             }
         } else if (roleChoice == "2") {
