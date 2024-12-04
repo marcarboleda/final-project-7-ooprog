@@ -71,7 +71,7 @@ public:
     void displayFlightDetails() const {
         cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
              << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
-             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: $" << price << endl; 
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\tPrice: P" << price << endl;
     }
 };
 
