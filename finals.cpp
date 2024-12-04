@@ -53,9 +53,9 @@ public:
     void decreaseSeats() { availableSeats--; }
 
     void displayFlightDetails() const {
-        cout << "Flight Number: " << flightNumber << "\tOrigin: " << origin << "\tDestination: " << destination
-             << "\nDeparture: " << departureTime << "\tArrival: " << arrivalTime << "\tAvailable Seats: " << availableSeats
-             << "\nGate: " << gate << "\tTerminal: " << terminal << endl;
+        cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
+             << "\nDeparture: " << "\t" << departureTime << "\tArrival: " << "\t" << arrivalTime << "\tAvailable Seats: " << "\t" << availableSeats
+             << "\nGate: " << "\t\t" << gate << "\t\tTerminal: " << "\t" << terminal << "\t" << endl;
     }
 };
 
@@ -82,8 +82,8 @@ public:
     void listFlights() {
         cout << "\nAvailable Flights:\n";
         for (const auto& flight : flights) {
+            cout << "------------------------------------------------------------------------------------------------\n";
             flight.displayFlightDetails();
-            cout << "-----------------------------------\n";
         }
     }
 };
@@ -114,7 +114,9 @@ public:
     }
 
     void bookFlight(AirlineDatabase& db) {
+        db.listFlights();
         string flightChoice;
+        cout << "------------------------------------------------------------------------------------------------\n";
         cout << "Enter flight number to book: ";
         cin >> flightChoice;
         bookings.push_back(flightChoice);
@@ -258,8 +260,8 @@ public:
 int main() {
     AirlineDatabase db;
     db.addFlight(Flight("PA123", "Manila", "Cebu", "10:00 AM", "12:00 PM", 50, "A1", "T1"));
-    db.addFlight(Flight("PA456", "Manila", "Davao", "2:00 PM", "4:00 PM", 40, "B1", "T2"));
-    db.addFlight(Flight("PA789", "Manila", "Iloilo", "6:00 PM", "8:00 PM", 30, "C1", "T3"));
+    db.addFlight(Flight("PA456", "Manila", "Davao", "02:00 PM", "04:00 PM", 40, "B1", "T2"));
+    db.addFlight(Flight("PA789", "Manila", "Iloilo", "06:00 PM", "08:00 PM", 30, "C1", "T3"));
 
     bool running = true;
 
@@ -285,28 +287,25 @@ int main() {
 
         string username, password;
 
-        if (roleChoice == "1") {
-            SystemClear();
-            cout << "Admin Login\n";
+        if (roleChoice == "1" || roleChoice == "2") {
+            system("cls");
+            cout << "\n---------------------------------------------\n";
+            cout << (roleChoice == "1" ? "Admin Login" : "Customer Login") << "\n";
+            cout << "---------------------------------------------\n";
             cout << "Enter username: ";
             cin >> username;
             cout << "Enter password: ";
             cin >> password;
 
-            Admin admin(username, password);
-            admin.login();
-            admin.displayMenu(db);
-        } else if (roleChoice == "2") {
-            SystemClear();
-            cout << "Customer Login\n";
-            cout << "Enter username: ";
-            cin >> username;
-            cout << "Enter password: ";
-            cin >> password;
-
-            Customer customer(username, password);
-            customer.login();
-            customer.displayMenu(db);
+            if (roleChoice == "1") {
+                Admin admin(username, password);
+                admin.login();
+                admin.displayMenu(db);
+            } else if (roleChoice == "2") {
+                Customer customer(username, password);
+                customer.login();
+                customer.displayMenu(db);
+            }
         } else if (roleChoice == "3") {
             SystemClear();
             cout << "\nExiting...\n";
