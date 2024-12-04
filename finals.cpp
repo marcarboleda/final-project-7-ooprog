@@ -55,7 +55,11 @@ public:
     string getGate() const { return gate; }
     string getTerminal() const { return terminal; }
 
-    void decreaseSeats() { availableSeats--; }
+    void decreaseSeats() { 
+        if (availableSeats > 0) {
+        --availableSeats;
+    }
+    }
 
     void displayFlightDetails() const {
         cout << "Flight Number: " << "\t" << flightNumber << "\t\tOrigin: " << "\t" << origin << "\t\tDestination: " << "\t\t" << destination
@@ -70,6 +74,7 @@ private:
     vector<Flight> flights;
 
 public:
+    vector<Flight>& getFlights() { return flights; }
     void addFlight(const Flight& flight) {
         flights.push_back(flight);
     }
@@ -109,10 +114,10 @@ public:
         }
     }
 
-    // **Add the getter for flights here**
-    vector<Flight> getFlights() {
-        return flights;
-    }
+    // // **Add the getter for flights here**
+    // vector<Flight> getFlights() {
+    //     return flights;
+    // }
 };
 
 
