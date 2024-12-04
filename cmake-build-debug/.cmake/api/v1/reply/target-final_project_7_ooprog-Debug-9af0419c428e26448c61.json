@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "final_project_7_ooprog"
+			"path" : "final_project_7_ooprog.exe"
+		},
+		{
+			"path" : "final_project_7_ooprog.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -35,7 +38,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++14 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.6 -fcolor-diagnostics"
+					"fragment" : "-g -std=gnu++14 -fdiagnostics-color=always"
 				}
 			],
 			"language" : "CXX",
@@ -65,12 +68,16 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "final_project_7_ooprog",
-	"nameOnDisk" : "final_project_7_ooprog",
+	"nameOnDisk" : "final_project_7_ooprog.exe",
 	"paths" : 
 	{
 		"build" : ".",

@@ -372,7 +372,7 @@ public:
         }
         SystemPause();
     }
-    
+
     void manageFlights(AirlineDatabase& db) {
         bool isManaging = true;
         while (isManaging) {
@@ -462,7 +462,7 @@ public:
 
     SystemPause();
 }
-  
+
     void displayMenu(AirlineDatabase& db) override {
         bool isRunning = true;
 
@@ -523,28 +523,29 @@ int main() {
         cout << "Enter your choice: ";
         cin >> roleChoice;
 
-        string username, password;
-
-        if (roleChoice == "1" || roleChoice == "2") {
+        if (roleChoice == "1") {
+            // Admin login process
+            string username, password;
             SystemClear();
             cout << "\n---------------------------------------------\n";
-            cout << (roleChoice == "1" ? "Admin Login" : "Customer Login") << "\n";
+            cout << "Admin Login\n";
             cout << "---------------------------------------------\n";
             cout << "Enter username: ";
             cin >> username;
             cout << "Enter password: ";
             cin >> password;
 
-            if (roleChoice == "1") {
-                Admin admin(username, password);
-                admin.login();
-                admin.displayMenu(db);
-            } else if (roleChoice == "2") {
-                Customer customer(username, password);
-                customer.login();
-                customer.displayMenu(db);
-            }
+            Admin admin(username, password);
+            admin.login();
+            admin.displayMenu(db);
+        } else if (roleChoice == "2") {
+            // Directly access customer menu without login
+            SystemClear();
+            cout << "\nWelcome to the Customer Menu!\n";
+            Customer customer("Guest", ""); // Placeholder username for Customer
+            customer.displayMenu(db);
         } else if (roleChoice == "3") {
+            // Exit the application
             SystemClear();
             cout << "\nExiting...\n";
             SystemPause();
