@@ -134,6 +134,7 @@ public:
 
         while (isRunning) {
             string choice;
+            system("cls");
             cout << "\nCustomer Menu:\n";
             cout << "[1] View Personal Information\n";
             cout << "[2] View Bookings (Update/Cancel)\n";
@@ -144,25 +145,37 @@ public:
             cin >> choice;
 
             if (choice == "1") {
+                system("cls");
                 cout << "\nPersonal Information\n";
                 cout << "Username: " << username << endl;
+                system("pause");
                 continue;
             } else if (choice == "2" ) {
+                system("cls");
                 viewBookings();
                 cout << "Select a booking to cancel or modify.\n";
                 cancelFlight(db);
+                system("pause");
                 continue;
             } else if (choice == "3" ) {
+                system("cls");
                 cout << "Available flights: \n -----\n-----\n";
+                system("pause");
                 continue;
             } else if (choice == "4" ) {
+                system("cls");
                 cout << "Select a booking to cancel or modify.\n";
+                system("pause");
                 continue;
             } else if (choice == "5" ) {
+                system("cls");
                 cout << "\nLogged out...\n";
+                system("pause");
                 break;
             } else {
+                system("cls");
                 cout << "\nInvalid choice. Try again.\n";
+                system("pause");
             }
         }
     }
@@ -190,6 +203,7 @@ public:
 
         while (isRunning) {
             string choice;
+            system("cls");
             cout << "\nAdmin Menu:\n";
             cout << "[1] Manage Flights\n";
             cout << "[2] Manage Users\n";
@@ -198,16 +212,24 @@ public:
             cin >> choice;
 
             if (choice == "1") {
+                system("cls");
                 cout << "check\n";
+                system("pause");
                 continue;
             } else if (choice == "2") {
+                system("cls");
                 cout << "check\n";
+                system("pause");
                 continue;
             } else if (choice == "3"){
+                system("cls");
                 cout << "\nLogged out...\n";
+                system("pause");
                 break;
             } else {
+                system("cls");
                 cout << "\nInvalid choice. Try again.\n";
+                system("pause");
             }
         }
 
@@ -224,16 +246,30 @@ int main() {
 
     while (running) {
         string roleChoice;
-        cout << "\nWelcome to the Airline Management System!\n";
-        cout << "Are you signing up as:\n";
-        cout << "1. Admin\n";
-        cout << "2. Customer\n";
-        cout << "3. Exit\n";
+        cout << "\n"
+                "  _      _                 _ _____  _    _ \n"
+                " | |    (_)               | |  __ \\| |  | |\n"
+                " | |     _ _ __   __ _  __| | |__) | |__| |\n"
+                " | |    | | '_ \\ / _` |/ _` |  ___/|  __  |\n"
+                " | |____| | |_) | (_| | (_| | |    | |  | |\n"
+                " |______|_| .__/ \\__,_|\\__,_|_|    |_|  |_|\n"
+                "          | |                              \n"
+                "          |_|                              \n\n";
+        cout << "-------------------------------------------\n";
+        cout << "Please select an option:\n";
+        cout << " [1] Admin\n";
+        cout << " [2] Customer\n";
+        cout << " [3] Exit\n";
+        cout << "-------------------------------------------\n";
         cout << "Enter your choice: ";
         cin >> roleChoice;
 
         string username, password;
         if (roleChoice == "1" || roleChoice == "2") {
+            system("cls");
+            cout << "\n---------------------------------------------\n";
+            cout << (roleChoice == "1" ? "Admin Login" : "Customer Login") << "\n";
+            cout << "---------------------------------------------\n";
             cout << "Enter username: ";
             cin >> username;
             cout << "Enter password: ";
